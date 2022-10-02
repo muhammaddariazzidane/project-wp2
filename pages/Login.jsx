@@ -1,8 +1,18 @@
 import React from "react";
 import { FaGithubAlt } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { auth } from "../src/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 
 const Login = () => {
+  const [user] = useAuthState(auth);
+  console.log(user);
+
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithRedirect(auth, provider);
+  };
   return (
     <>
       <section className="bg-dark mt-8">
@@ -14,6 +24,7 @@ const Login = () => {
               </div>
               <div className="btn-wrapper text-center">
                 <button
+                  onClick={googleSignIn}
                   className="bg-white  text-dark  px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                   type="button"
                 >

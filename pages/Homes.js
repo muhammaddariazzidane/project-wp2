@@ -3,7 +3,7 @@ import Materi from "../components/Home/Materi";
 import NavbarHome from "../components/Home/NavbarHome";
 import SideMenu from "../components/Home/SideMenu";
 
-const Home = () => {
+const Homes = () => {
   return (
     <>
       <NavbarHome />
@@ -13,4 +13,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Homes;

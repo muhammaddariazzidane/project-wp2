@@ -1,4 +1,4 @@
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Transition } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import ExampleData from "./data/ExampleData";
 
@@ -16,7 +16,16 @@ export default function Example() {
                       <span className={`${open ? "text-secondary duration-500 " : "duration-500 text-white"} font-bold `}>{item.text}</span>
                       <ChevronUpIcon className={`${open ? " text-secondary transform duration-500" : "duration-500 text-white rotate-180"} h-8 w-8 `} />
                     </Disclosure.Button>
-                    <Disclosure.Panel className="px-4 py-4 text-lg bg-gray-800 text-white">{item.desc}</Disclosure.Panel>
+                    <Transition
+                      enter="transition duration-500 ease-out"
+                      enterFrom="transform scale-95 opacity-0"
+                      enterTo="transform scale-100 opacity-100"
+                      leave="transition duration-500 ease-out"
+                      leaveFrom="transform scale-100 opacity-100"
+                      leaveTo="transform scale-95 duration-500 opacity-0"
+                    >
+                      <Disclosure.Panel className="px-4 py-4 text-lg bg-gray-800 text-white">{item.desc}</Disclosure.Panel>
+                    </Transition>
                   </>
                 )}
               </Disclosure>

@@ -1,72 +1,168 @@
-import React from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../src/firebase";
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
 
 const SideMenu = () => {
+  const [user] = useAuthState(auth);
+  console.log(user.photoURL);
+
+  const signOut = () => {
+    signOut(auth);
+  };
+
   return (
-    <div className="absolute left-0 top-[4rem] w-[15%] sm:w-[60%] md:w-[15%] h-screen  bg-secondary  ">
-      <div className="h-screen">
-        <div className="pl-10">
-          <ul className="space-y-8 pt-10">
-            <li className="flex space-x-4 items-center  cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"
-                />
-              </svg>
-              <a href="">Dashboard</a>
-            </li>
-            <li className="flex space-x-4 items-center  cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              <a href="">Activity</a>
-            </li>
-            <li className="flex space-x-4 items-center  cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                />
-              </svg>
-              <a href="">Library</a>
-            </li>
-            <li className="flex space-x-4 items-center  cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                />
-              </svg>
-              <a href="">Security</a>
-            </li>
-            <li className="flex space-x-4 items-center  cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-              </svg>
-              <a href="">Schedules</a>
-            </li>
-            <li className="flex space-x-4 items-center  cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <a href="">Payouts</a>
-            </li>
-          </ul>
+    <div className=" w-56 text-right">
+      <Menu as="div" className="relative inline-block text-left">
+        <div>
+          <Menu.Button className="inline-flex w-full justify-center rounded-md  px-4 py-2 text-sm font-medium ">
+            <img src={user.photoURL} alt="/" className="h-10 w-10 rounded-full hover:scale-110 duration-500" />
+            {/* <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100" aria-hidden="true" /> */}
+          </Menu.Button>
         </div>
-      </div>
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items className="absolute right-0 w-32 origin-top-right rounded-md bg-white  shadow-lg  ">
+            <div className="px-1 py-1 ">
+              <Menu.Item>
+                {({ active }) => (
+                  <button onClick={() => auth.signOut()} className={`${active ? " " : "text-secondary"} group flex w-full items-center rounded-md px-2 py-2 text-sm`}>
+                    <ArrowRightOnRectangleIcon className="h-4 w-5 mr-1 text-red-600" />
+                    Logout
+                  </button>
+                )}
+              </Menu.Item>
+              {/* <Menu.Item>
+                {({ active }) => (
+                  <button className={`${active ? "bg-violet-500 text-white" : "text-gray-900"} group flex w-full items-center rounded-md px-2 py-2 text-sm`}>
+                    {active ? <DuplicateActiveIcon className="mr-2 h-5 w-5" aria-hidden="true" /> : <DuplicateInactiveIcon className="mr-2 h-5 w-5" aria-hidden="true" />}
+                    Duplicate
+                  </button>
+                )}
+              </Menu.Item> */}
+            </div>
+            {/* <div className="px-1 py-1">
+              <Menu.Item>
+                {({ active }) => (
+                  <button className={`${active ? "bg-violet-500 text-white" : "text-gray-900"} group flex w-full items-center rounded-md px-2 py-2 text-sm`}>
+                    {active ? <ArchiveActiveIcon className="mr-2 h-5 w-5" aria-hidden="true" /> : <ArchiveInactiveIcon className="mr-2 h-5 w-5" aria-hidden="true" />}
+                    Archive
+                  </button>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <button className={`${active ? "bg-violet-500 text-white" : "text-gray-900"} group flex w-full items-center rounded-md px-2 py-2 text-sm`}>
+                    {active ? <MoveActiveIcon className="mr-2 h-5 w-5" aria-hidden="true" /> : <MoveInactiveIcon className="mr-2 h-5 w-5" aria-hidden="true" />}
+                    Move
+                  </button>
+                )}
+              </Menu.Item>
+            </div>
+            <div className="px-1 py-1">
+              <Menu.Item>
+                {({ active }) => (
+                  <button className={`${active ? "bg-violet-500 text-white" : "text-gray-900"} group flex w-full items-center rounded-md px-2 py-2 text-sm`}>
+                    {active ? <DeleteActiveIcon className="mr-2 h-5 w-5 text-violet-400" aria-hidden="true" /> : <DeleteInactiveIcon className="mr-2 h-5 w-5 text-violet-400" aria-hidden="true" />}
+                    Delete
+                  </button>
+                )}
+              </Menu.Item>
+            </div> */}
+          </Menu.Items>
+        </Transition>
+      </Menu>
     </div>
   );
 };
+
+
+
+// function DuplicateInactiveIcon(props) {
+//   return (
+//     <svg {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+//       <path d="M4 4H12V12H4V4Z" fill="#EDE9FE" stroke="#A78BFA" strokeWidth="2" />
+//       <path d="M8 8H16V16H8V8Z" fill="#EDE9FE" stroke="#A78BFA" strokeWidth="2" />
+//     </svg>
+//   );
+// }
+
+// function DuplicateActiveIcon(props) {
+//   return (
+//     <svg {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+//       <path d="M4 4H12V12H4V4Z" fill="#8B5CF6" stroke="#C4B5FD" strokeWidth="2" />
+//       <path d="M8 8H16V16H8V8Z" fill="#8B5CF6" stroke="#C4B5FD" strokeWidth="2" />
+//     </svg>
+//   );
+// }
+
+// function ArchiveInactiveIcon(props) {
+//   return (
+//     <svg {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+//       <rect x="5" y="8" width="10" height="8" fill="#EDE9FE" stroke="#A78BFA" strokeWidth="2" />
+//       <rect x="4" y="4" width="12" height="4" fill="#EDE9FE" stroke="#A78BFA" strokeWidth="2" />
+//       <path d="M8 12H12" stroke="#A78BFA" strokeWidth="2" />
+//     </svg>
+//   );
+// }
+
+// function ArchiveActiveIcon(props) {
+//   return (
+//     <svg {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+//       <rect x="5" y="8" width="10" height="8" fill="#8B5CF6" stroke="#C4B5FD" strokeWidth="2" />
+//       <rect x="4" y="4" width="12" height="4" fill="#8B5CF6" stroke="#C4B5FD" strokeWidth="2" />
+//       <path d="M8 12H12" stroke="#A78BFA" strokeWidth="2" />
+//     </svg>
+//   );
+// }
+
+// function MoveInactiveIcon(props) {
+//   return (
+//     <svg {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+//       <path d="M10 4H16V10" stroke="#A78BFA" strokeWidth="2" />
+//       <path d="M16 4L8 12" stroke="#A78BFA" strokeWidth="2" />
+//       <path d="M8 6H4V16H14V12" stroke="#A78BFA" strokeWidth="2" />
+//     </svg>
+//   );
+// }
+
+// function MoveActiveIcon(props) {
+//   return (
+//     <svg {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+//       <path d="M10 4H16V10" stroke="#C4B5FD" strokeWidth="2" />
+//       <path d="M16 4L8 12" stroke="#C4B5FD" strokeWidth="2" />
+//       <path d="M8 6H4V16H14V12" stroke="#C4B5FD" strokeWidth="2" />
+//     </svg>
+//   );
+// }
+
+// function DeleteInactiveIcon(props) {
+//   return (
+//     <svg {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+//       <rect x="5" y="6" width="10" height="10" fill="#EDE9FE" stroke="#A78BFA" strokeWidth="2" />
+//       <path d="M3 6H17" stroke="#A78BFA" strokeWidth="2" />
+//       <path d="M8 6V4H12V6" stroke="#A78BFA" strokeWidth="2" />
+//     </svg>
+//   );
+// }
+
+// function DeleteActiveIcon(props) {
+//   return (
+//     <svg {...props} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+//       <rect x="5" y="6" width="10" height="10" fill="#8B5CF6" stroke="#C4B5FD" strokeWidth="2" />
+//       <path d="M3 6H17" stroke="#C4B5FD" strokeWidth="2" />
+//       <path d="M8 6V4H12V6" stroke="#C4B5FD" strokeWidth="2" />
+//     </svg>
+//   );
+// }
 
 export default SideMenu;

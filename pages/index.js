@@ -8,8 +8,15 @@ import Step from "../components/Step";
 import Teams from "../components/Teams";
 import Why from "../components/Why";
 import Intro from "./../components/Intro";
+import { auth } from "../src/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Homes from "./Homes";
+import App from "./App";
 
 export default function Home() {
+  const [user] = useAuthState(auth);
+  console.log(user);
+
   return (
     <div>
       <Head>
@@ -19,15 +26,21 @@ export default function Home() {
       </Head>
 
       <>
-        <Navbar />
+        {user ?  <Homes/> : <App />}
+        {/* <Navbar />
         <Intro />
         <Why />
         <Main />
         <Step />
-        {/* <Example /> */}
         <Teams />
         <Pricing />
-        <Footer />
+        <Footer /> */}
+        {/* {user ? (
+          <>
+          </>
+        ) : (
+          <Homes />
+        )} */}
       </>
     </div>
   );
